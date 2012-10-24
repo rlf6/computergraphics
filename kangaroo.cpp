@@ -208,22 +208,22 @@ void drawScene()
 		case 4:
 			drawEar();
 		break;
-		case 4:
+		case 5:
 			drawJ();
 		break;
-		case 5:
+		case 6:
 			drawR();
 		break;
-		case 6:
+		case 7:
 			drawL();
 		break;
-		case 7:
+		case 8:
 			drawF();
 		break;
-		case 8:
+		case 9:
 			drawG();
 		break;
-		case 9:
+		case 10:
 			drawA();
 		break;
 		default:
@@ -242,11 +242,17 @@ void drawKangaroo()
 void drawBody()
 {
 	glPushMatrix();
-		glRotatef(90,1,0,0);
+		glTranslatef(0,3,0);
+		glScalef(0.75,3.0,1);
 		glPushMatrix();
-			glTranslatef(0,0,0);
-			glScalef(1.5, 1.25, 1.5);
-			drawG();
+			for(int i = 0; i < 360; i++)
+			{
+				glPushMatrix();
+				glRotatef(i, 0, 1, 0);
+				glTranslatef(-4, 0, 0);
+				drawG();
+				glPopMatrix();
+			}           
 		glPopMatrix();
 	glPopMatrix();
 }
