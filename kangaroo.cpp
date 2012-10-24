@@ -245,12 +245,12 @@ void drawBody()
 void drawHead()
 {
 	//main part
-	
+	glTranslatef(0, 3, 0);
+	glScalef(1, 1.5, 1);
 	
 	glPushMatrix();
 		for(int i = 0; i < 360; i++)
 		{
-			
 			glPushMatrix();
 			glRotatef(i, 0, 1, 0);
 			glTranslatef(-4, 0, 0);
