@@ -32,6 +32,7 @@ float foot_angle = 90;
 void drawLeg();
 void drawHead();
 void drawBody();
+void drawEar();
 
 
 //======================================================
@@ -275,6 +276,11 @@ void drawHead()
 
 void drawEar()
 {
+	glPushMatrix();
+		glPushMatrix();
+			
+		glPopMatrix();
+	glPopMatrix();
 }
 
 void drawLeg()
