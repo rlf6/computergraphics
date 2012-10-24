@@ -31,6 +31,7 @@ float foot_angle = 90;
 //Prototypes
 void drawLeg();
 void drawHead();
+void drawBody();
 
 
 //======================================================
@@ -201,21 +202,24 @@ void drawScene()
 			drawHead();
 		break;
 		case 3:
-			drawJ();
+			drawBody();
 		break;
 		case 4:
-			drawR();
+			drawJ();
 		break;
 		case 5:
-			drawL();
+			drawR();
 		break;
 		case 6:
-			drawF();
+			drawL();
 		break;
 		case 7:
-			drawG();
+			drawF();
 		break;
 		case 8:
+			drawG();
+		break;
+		case 9:
 			drawA();
 		break;
 		default:
@@ -233,13 +237,14 @@ void drawKangaroo()
 //draw body
 void drawBody()
 {
-	//draw head
-
-	//draw arms
-
-	//draw tail
-
-	//draw legs
+	glPushMatrix();
+		glRotatef(90,1,0,0);
+		glPushMatrix();
+			glTranslatef(0,0,0);
+			glScalef(1.5, 1.25, 1.5);
+			drawG();
+		glPopMatrix();
+	glPopMatrix();
 }
 
 void drawHead()
