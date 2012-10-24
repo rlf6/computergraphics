@@ -245,29 +245,11 @@ void drawBody()
 void drawHead()
 {
 	//main part
-	//glPushMatrix();
-		//glPushMatrix();
-			//glTranslatef(-3, 3, 0);
-			//glScalef(1.5, 1.25, 1.5);
-			//drawG();
-		//glPopMatrix();
-		//glPushMatrix();
-			//glTranslatef(-2.5, 2.5, 1.25);
-			//glScalef(1.25, 1, 1.25);
-			//drawG();
-			//glTranslatef(0, 0, -2);
-			//drawG();
-		//glPopMatrix();
-		//glPushMatrix();
-			//glTranslatef(-2, 2, 2.25);
-			//glScalef(1, 0.8, 1);
-			//drawG();
-		//glPopMatrix();
-	//glPopMatrix();
+	
+	
 	glPushMatrix();
 		for(int i = 0; i < 360; i++)
 		{
-			
 			
 			glPushMatrix();
 			glRotatef(i, 0, 1, 0);
