@@ -242,11 +242,17 @@ void drawKangaroo()
 void drawBody()
 {
 	glPushMatrix();
-		glRotatef(90,1,0,0);
+		glTranslatef(0,3,0);
+		glScalef(0.75,3.0,1);
 		glPushMatrix();
-			glTranslatef(0,0,0);
-			glScalef(1.5, 1.25, 1.5);
-			drawG();
+			for(int i = 0; i < 360; i++)
+			{
+				glPushMatrix();
+				glRotatef(i, 0, 1, 0);
+				glTranslatef(-4, 0, 0);
+				drawG();
+				glPopMatrix();
+			}           
 		glPopMatrix();
 	glPopMatrix();
 }
