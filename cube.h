@@ -1,0 +1,3 @@
+
+extern void cube(void);
+
