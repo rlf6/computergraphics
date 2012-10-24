@@ -208,22 +208,22 @@ void drawScene()
 		case 4:
 			drawEar();
 		break;
-		case 4:
+		case 5:
 			drawJ();
 		break;
-		case 5:
+		case 6:
 			drawR();
 		break;
-		case 6:
+		case 7:
 			drawL();
 		break;
-		case 7:
+		case 8:
 			drawF();
 		break;
-		case 8:
+		case 9:
 			drawG();
 		break;
-		case 9:
+		case 10:
 			drawA();
 		break;
 		default:
