@@ -277,8 +277,11 @@ void drawHead()
 void drawEar()
 {
 	glPushMatrix();
+		glScalef(0.5, 0.5, 0.5);
 		glPushMatrix();
-			
+			glTranslatef(2.5, 0, 0);
+			glRotatef(270, 0, 0, 1);
+			drawG();
 		glPopMatrix();
 	glPopMatrix();
 }
