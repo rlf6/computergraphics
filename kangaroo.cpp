@@ -11,7 +11,7 @@
 #include "./J.h"
 #include "./G.h"
 
-#define NUMBER_OF_MODELS 8
+#define NUMBER_OF_MODELS 10
 
 //======================================================
 // GLOBAL VARIABLES 
@@ -205,6 +205,9 @@ void drawScene()
 			drawBody();
 		break;
 		case 4:
+			drawEar();
+		break;
+		case 4:
 			drawJ();
 		break;
 		case 5:
@@ -250,22 +253,28 @@ void drawBody()
 void drawHead()
 {
 	//main part
-	glTranslatef(0, 3, 0);
-	glScalef(1, 1.5, 1);
-	
 	glPushMatrix();
-		for(int i = 0; i < 360; i++)
-		{
-			glPushMatrix();
-			glRotatef(i, 0, 1, 0);
-			glTranslatef(-4, 0, 0);
-			drawG();
-			glPopMatrix();
-		}               
+		glTranslatef(0, 3, 0);
+		glScalef(1, 1.5, 1);
+		
+		glPushMatrix();
+			for(int i = 0; i < 360; i++)
+			{
+				glPushMatrix();
+				glRotatef(i, 0, 1, 0);
+				glTranslatef(-4, 0, 0);
+				drawG();
+				glPopMatrix();
+			}               
+		glPopMatrix();
+		//snout
+		
+		//ears
 	glPopMatrix();
-	//snout
-	
-	//ears
+}
+
+void drawEar()
+{
 }
 
 void drawLeg()
