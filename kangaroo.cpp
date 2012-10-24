@@ -287,7 +287,12 @@ void drawEar()
 		glPushMatrix();
 			glTranslatef(2.5, 0, 0);
 			glRotatef(270, 0, 0, 1);
-			drawG();
+			drawG();				
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-2, 5 , 0);
+			glScalef(1, 1.5, 1);
+			drawA();
 		glPopMatrix();
 	glPopMatrix();
 }
