@@ -326,6 +326,10 @@ void drawArm()
 
 void drawSnout()
 {
+	glPushMatrix();
+		glRotatef(90, 1, 0, 0);
+		drawR();
+	glPopMatrix();
 }
 
 void drawLeg()
