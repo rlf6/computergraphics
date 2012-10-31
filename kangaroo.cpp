@@ -16,7 +16,7 @@
 //======================================================
 // GLOBAL VARIABLES 
 //======================================================
-int current_model = 1;
+int current_model = 0;
 
 float pitch = 0.0f;
 float yaw = 0.0f;
@@ -29,6 +29,7 @@ float foot_angle = 90;
 
 //
 //Prototypes
+void drawKangaroo();
 void drawLeg();
 void drawHead();
 void drawBody();
@@ -162,7 +163,7 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 	//model selection
 	case 'm': case 'M':
 		current_model++;
-		if (current_model > NUMBER_OF_MODELS) current_model = 1;
+		if (current_model > NUMBER_OF_MODELS) current_model = 0;
 	break;
 	case '1':
 		foot_angle += 10;
@@ -198,6 +199,9 @@ void drawScene()
 	
 	switch(current_model)
 	{
+		case 0:
+			drawKangaroo();
+		break;
 		case 1: 
 			drawLeg();
 		break;
@@ -244,7 +248,23 @@ void drawScene()
 
 void drawKangaroo()
 {
-	
+	glRotatef(45, 1, 0, 0);
+	drawBody();
+	glPushMatrix();
+		glTranslatef(0, 6.7, 0);
+		glScalef(0.7, 0.7, 0.7);
+		drawHead();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(-2, -4.5, 0.5);
+		glRotatef(-90, 0, 1, 0);
+		drawLeg();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(2, -4.5, 0.5);
+		glRotatef(-90, 0, 1, 0);
+		drawLeg();
+	glPopMatrix();
 }
 //draw body
 void drawBody()
@@ -342,18 +362,21 @@ void drawSnout()
 void drawLeg()
 {
 	//upper leg
-	glTranslatef(3, 0, 0);
+	glRotatef(-45, 0, 0, 1);
 	glPushMatrix();
-		glRotatef(180, 0, 1, 0);
-		drawF();
-	glPopMatrix();
-	glTranslatef(-0.5, -4, 0);
-	drawL();
-	//foot
-	glPushMatrix();
-		glTranslatef(2, -5.5, 0);
-		glRotatef(foot_angle, 0, 0, 1);
+		glTranslatef(3, 0, 0);
+		glPushMatrix();
+			glRotatef(180, 0, 1, 0);
+			drawF();
+		glPopMatrix();
+		glTranslatef(-0.5, -4, 0);
 		drawL();
+		//foot
+		glPushMatrix();
+			glTranslatef(2, -5.5, 0);
+			glRotatef(foot_angle, 0, 0, 1);
+			drawL();
+		glPopMatrix();
 	glPopMatrix();
 }
 		
