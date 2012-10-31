@@ -23,6 +23,7 @@ bool MousePressed;
 int mouseX0, mouseY0;
 bool rotating=false;
 //articulation
+bool animated=false;
 float foot_angle = 90;
 float leg_rot = 30;
 float body_rot = 45;
@@ -156,13 +157,16 @@ void reshapeCallBack(int w, int h)
 
 void animate(int x)
 {
-	body_rot += 3*change;
-	leg_rot -= 10*change;
-	foot_angle += 10*change;
-	if(leg_rot == -30 || leg_rot == 30)
-		{ change = change * -1; }
-	glutPostRedisplay();
-	glutTimerFunc(100, animate, x);
+	if(animated)
+	{	
+		body_rot += 3*change;
+		leg_rot -= 10*change;
+		foot_angle += 10*change;
+		if(leg_rot == -30 || leg_rot == 30)
+			{ change = change * -1; }
+		glutPostRedisplay();
+		glutTimerFunc(100, animate, x);
+	}
 }
 //======================================================
 // KEYBOARD CALLBACK ROUTINE 
@@ -177,7 +181,13 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 		if (current_model > NUMBER_OF_MODELS) current_model = 0;
 	break;
 	case '1':
-		animate(x);
+		if(animated)
+		{ animated=false;}
+		if(!animated)
+		{	
+			animated=true;
+			animate(x); 
+		}
 	break;
 	case 'b': case 'B':
 		glPolygonMode(GL_BACK,GL_FILL);
