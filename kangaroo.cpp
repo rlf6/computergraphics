@@ -11,7 +11,7 @@
 #include "./J.h"
 #include "./G.h"
 
-#define NUMBER_OF_MODELS 10
+#define NUMBER_OF_MODELS 11
 
 //======================================================
 // GLOBAL VARIABLES 
@@ -33,6 +33,7 @@ void drawLeg();
 void drawHead();
 void drawBody();
 void drawEar();
+void drawArm();
 
 
 //======================================================
@@ -298,6 +299,14 @@ void drawEar()
 		glPopMatrix();
 	glPopMatrix();
 }
+
+void drawArm()
+{
+	glPushMatrix();
+		drawJ();
+	glPopMatrix();
+}
+
 
 void drawLeg()
 {
