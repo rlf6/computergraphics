@@ -27,6 +27,7 @@ bool animated=false;
 float foot_angle = 90;
 float leg_rot = 30;
 float body_rot = 45;
+float arm_rot = 0;
 int change = 1;
 
 //
@@ -156,17 +157,14 @@ void reshapeCallBack(int w, int h)
 }
 
 void animate(int x)
-{
-	if(animated)
-	{	
-		body_rot += 3*change;
-		leg_rot -= 10*change;
-		foot_angle += 10*change;
-		if(leg_rot == -30 || leg_rot == 30)
-			{ change = change * -1; }
-		glutPostRedisplay();
-		glutTimerFunc(100, animate, x);
-	}
+{	
+	body_rot += 3*change;
+	leg_rot -= 10*change;
+	foot_angle += 10*change;
+	if(leg_rot == -30 || leg_rot == 30)
+		{ change = change * -1; }
+	glutPostRedisplay();
+	glutTimerFunc(100, animate, x);
 }
 //======================================================
 // KEYBOARD CALLBACK ROUTINE 
@@ -180,14 +178,17 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 		current_model++;
 		if (current_model > NUMBER_OF_MODELS) current_model = 0;
 	break;
-	case '1':
-		if(animated)
-		{ animated=false;}
-		if(!animated)
-		{	
-			animated=true;
-			animate(x); 
-		}
+	//case '1':
+		//if(animated)
+		//{ 
+			//animated=false;
+			//animate(x);
+		//}
+		//if(!animated)
+		//{	
+			//animated=true;
+			//animate(x); 
+		//}
 	break;
 	case 'b': case 'B':
 		glPolygonMode(GL_BACK,GL_FILL);
@@ -222,6 +223,7 @@ void drawScene()
 	{
 		case 0:
 			drawKangaroo();
+			
 		break;
 		case 1: 
 			drawLeg();
@@ -271,23 +273,18 @@ void drawKangaroo()
 {
 	glRotatef(body_rot, 1, 0, 0);
 	drawBody();
+	//attach head
 	glPushMatrix();
 		glTranslatef(0, 6.7, 0);
 		glScalef(0.7, 0.7, 0.7);
 		drawHead();
 	glPopMatrix();
-	glPushMatrix();
-		glTranslatef(-2, -4.5, 0.5);
-		drawLeg();
-	glPopMatrix();
-	glPushMatrix();
-		glTranslatef(2, -4.5, 0.5);
-		drawLeg();
-	glPopMatrix();
+		
 }
 //draw body
 void drawBody()
 {
+	//main part
 	glPushMatrix();
 		glTranslatef(0,3,0);
 		glScalef(0.7,2,0.7);
@@ -301,6 +298,23 @@ void drawBody()
 				glPopMatrix();
 			}           
 		glPopMatrix();
+	glPopMatrix();
+	//attach legs
+	glPushMatrix();
+		glTranslatef(-2, -4.5, 0.5);
+		drawLeg();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(2, -4.5, 0.5);
+		drawLeg();
+	glPopMatrix();
+	//attach arms
+	glPushMatrix();
+		glTranslatef(-2, -2, 0);
+		glRotatef(arm_rot, 1, 0, 0);
+		drawArm();
+		glTranslatef(4, 0, 0);
+		drawArm();
 	glPopMatrix();
 }
 
@@ -323,7 +337,7 @@ void drawHead()
 		glPopMatrix();
 		//snout
 		
-		//ears
+		//attach ears
 		glPushMatrix();
 			glRotatef(-25, 1, 0, 0);
 			glPushMatrix();
@@ -355,7 +369,8 @@ void drawEar()
 void drawArm()
 {
 	glPushMatrix();
-		glTranslatef(0,0,0);
+	glRotatef(-90, 0, 1, 0);
+	glPushMatrix();
 		glPushMatrix();
 			glScalef(1.5,1.0,1.0);
 			glRotatef(90.0,0,0,1);
@@ -367,6 +382,7 @@ void drawArm()
 			glScalef(0.75,1.0,1.0);
 			drawF();
 		glPopMatrix();
+	glPopMatrix();
 	glPopMatrix();
 }
 
@@ -441,7 +457,10 @@ int main(int argc, char** argv)
 	glutMouseFunc(mouseClickCallBack);
     glutMotionFunc(mouseMotionCallBack);
 	glutKeyboardFunc(keyboardCallBack);
-
+	
+	int x; 
+	animate(x);
+	
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 	glColor3f(1.0, 0.0, 0.0);
 	glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
