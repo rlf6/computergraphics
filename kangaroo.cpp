@@ -244,7 +244,7 @@ void drawBody()
 {
 	glPushMatrix();
 		glTranslatef(0,3,0);
-		glScalef(1.0,3.0,1);
+		glScalef(0.7,2,0.7);
 		glPushMatrix();
 			for(int i = 0; i < 360; i++)
 			{
