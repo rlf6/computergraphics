@@ -25,6 +25,7 @@ bool rotating=false;
 //articulation
 float foot_angle = 90;
 float leg_rot = 30;
+float body_rot = 45;
 int change = 1;
 
 //
@@ -155,6 +156,7 @@ void reshapeCallBack(int w, int h)
 
 void animate(int x)
 {
+	body_rot += 3*change;
 	leg_rot -= 10*change;
 	foot_angle += 10*change;
 	if(leg_rot == -30 || leg_rot == 30)
@@ -257,7 +259,7 @@ void drawScene()
 
 void drawKangaroo()
 {
-	glRotatef(45, 1, 0, 0);
+	glRotatef(body_rot, 1, 0, 0);
 	drawBody();
 	glPushMatrix();
 		glTranslatef(0, 6.7, 0);
