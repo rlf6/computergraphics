@@ -265,18 +265,20 @@ void drawHead()
 		glScalef(1, 1.5, 1);
 		
 		glPushMatrix();
-			for(int i = 0; i < 360; i++)
+			for(int i = 180; i < 360; i++)
 			{
 				glPushMatrix();
 				glRotatef(i, 0, 1, 0);
 				glTranslatef(-4, 0, 0);
 				drawG();
 				glPopMatrix();
-			}               
+			}         
 		glPopMatrix();
 		//snout
 		
 		//ears
+		glTranslatef(-2, 1, 0);
+		drawEar();
 	glPopMatrix();
 }
 
@@ -284,10 +286,15 @@ void drawEar()
 {
 	glPushMatrix();
 		glScalef(0.5, 0.5, 0.5);
+		//glPushMatrix();
+			//glTranslatef(2.5, 0, 0);
+			//glRotatef(270, 0, 0, 1);
+			//drawG();				
+		//glPopMatrix();
 		glPushMatrix();
-			glTranslatef(2.5, 0, 0);
-			glRotatef(270, 0, 0, 1);
-			drawG();
+			glTranslatef(-2, 5 , 0);
+			glScalef(1, 1.5, 1);
+			drawA();
 		glPopMatrix();
 	glPopMatrix();
 }
