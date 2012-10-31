@@ -178,18 +178,6 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 		current_model++;
 		if (current_model > NUMBER_OF_MODELS) current_model = 0;
 	break;
-	//case '1':
-		//if(animated)
-		//{ 
-			//animated=false;
-			//animate(x);
-		//}
-		//if(!animated)
-		//{	
-			//animated=true;
-			//animate(x); 
-		//}
-	break;
 	case 'b': case 'B':
 		glPolygonMode(GL_BACK,GL_FILL);
 	break;
