@@ -214,21 +214,24 @@ void drawScene()
 			drawSnout();
 		break;
 		case 6:
-			drawJ();
+			drawArm();
 		break;
 		case 7:
-			drawR();
+			drawJ();
 		break;
 		case 8:
-			drawL();
+			drawR();
 		break;
 		case 9:
-			drawF();
+			drawL();
 		break;
 		case 10:
-			drawG();
+			drawF();
 		break;
 		case 11:
+			drawG();
+		break;
+		case 12:
 			drawA();
 		break;
 		default:
