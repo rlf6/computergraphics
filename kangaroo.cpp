@@ -2,8 +2,6 @@
 #include <GL/glut.h>
 #include <math.h>
 #include <stdio.h>
-//#include "./3Dcurve.h"
-//#include "./cube.h"
 #include "./R.h"
 #include "./L.h"
 #include "./F.h"
@@ -26,6 +24,8 @@ int mouseX0, mouseY0;
 bool rotating=false;
 //articulation
 float foot_angle = 90;
+float leg_rot = 30;
+int change = 1;
 
 //
 //Prototypes
@@ -166,7 +166,10 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 		if (current_model > NUMBER_OF_MODELS) current_model = 0;
 	break;
 	case '1':
-		foot_angle += 10;
+		leg_rot -= 10*change;
+		foot_angle += 10*change;
+		if(leg_rot == -30 || leg_rot == 30)
+		{ change = change * -1; }
 	break;
 	case 'b': case 'B':
 		glPolygonMode(GL_BACK,GL_FILL);
@@ -257,12 +260,10 @@ void drawKangaroo()
 	glPopMatrix();
 	glPushMatrix();
 		glTranslatef(-2, -4.5, 0.5);
-		glRotatef(-90, 0, 1, 0);
 		drawLeg();
 	glPopMatrix();
 	glPushMatrix();
 		glTranslatef(2, -4.5, 0.5);
-		glRotatef(-90, 0, 1, 0);
 		drawLeg();
 	glPopMatrix();
 }
@@ -355,6 +356,8 @@ void drawSnout()
 void drawLeg()
 {
 	//upper leg
+	glRotatef(leg_rot, 1, 0, 0);
+	glRotatef(-90, 0, 1, 0);
 	glRotatef(-45, 0, 0, 1);
 	glPushMatrix();
 		glTranslatef(3, 0, 0);
