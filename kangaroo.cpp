@@ -33,7 +33,11 @@ void drawLeg();
 void drawHead();
 void drawBody();
 void drawEar();
+<<<<<<< HEAD
 void drawArm();
+=======
+void drawSnout();
+>>>>>>> a87ad28cf544885069076f203e4a7fd6b5331bd0
 
 
 //======================================================
@@ -210,21 +214,24 @@ void drawScene()
 			drawEar();
 		break;
 		case 5:
-			drawJ();
+			drawSnout();
 		break;
 		case 6:
-			drawR();
+			drawJ();
 		break;
 		case 7:
-			drawL();
+			drawR();
 		break;
 		case 8:
-			drawF();
+			drawL();
 		break;
 		case 9:
-			drawG();
+			drawF();
 		break;
 		case 10:
+			drawG();
+		break;
+		case 11:
 			drawA();
 		break;
 		default:
@@ -263,7 +270,7 @@ void drawHead()
 	//main part
 	glPushMatrix();
 		glTranslatef(0, 3, 0);
-		glScalef(1, 1.5, 1);
+		glScalef(0.8, 1.5, 1);
 		
 		glPushMatrix();
 			for(int i = 180; i < 360; i++)
@@ -278,8 +285,18 @@ void drawHead()
 		//snout
 		
 		//ears
-		glTranslatef(-2, 1, 0);
-		drawEar();
+		glPushMatrix();
+			glRotatef(-25, 1, 0, 0);
+			glPushMatrix();
+				glTranslatef(-2, 1, -0.5);
+				drawEar();
+			glPopMatrix();
+			glPushMatrix();
+				glTranslatef(2, 1, -0.5);
+				drawEar();
+			glPopMatrix();
+		glPopMatrix();
+		
 	glPopMatrix();
 }
 
@@ -287,11 +304,7 @@ void drawEar()
 {
 	glPushMatrix();
 		glScalef(0.5, 0.5, 0.5);
-		//glPushMatrix();
-			//glTranslatef(2.5, 0, 0);
-			//glRotatef(270, 0, 0, 1);
-			//drawG();				
-		//glPopMatrix();
+	
 		glPushMatrix();
 			glTranslatef(-2, 5 , 0);
 			glScalef(1, 1.5, 1);
@@ -307,6 +320,9 @@ void drawArm()
 	glPopMatrix();
 }
 
+void drawSnout()
+{
+}
 
 void drawLeg()
 {
