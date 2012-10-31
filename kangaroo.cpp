@@ -11,7 +11,7 @@
 #include "./J.h"
 #include "./G.h"
 
-#define NUMBER_OF_MODELS 10
+#define NUMBER_OF_MODELS 11
 
 //======================================================
 // GLOBAL VARIABLES 
@@ -210,21 +210,24 @@ void drawScene()
 			drawEar();
 		break;
 		case 5:
-			drawJ();
+			drawSnout();
 		break;
 		case 6:
-			drawR();
+			drawJ();
 		break;
 		case 7:
-			drawL();
+			drawR();
 		break;
 		case 8:
-			drawF();
+			drawL();
 		break;
 		case 9:
-			drawG();
+			drawF();
 		break;
 		case 10:
+			drawG();
+		break;
+		case 11:
 			drawA();
 		break;
 		default:
@@ -307,6 +310,8 @@ void drawEar()
 }
 
 void drawSnout()
+{
+}
 
 void drawLeg()
 {
