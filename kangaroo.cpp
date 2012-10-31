@@ -317,9 +317,16 @@ void drawArm()
 {
 	glPushMatrix();
 		glTranslatef(0,0,0);
-		glRotatef(90.0,0,0,1);
 		glPushMatrix();
+			glScalef(1.5,1.0,1.0);
+			glRotatef(90.0,0,0,1);
 			drawJ();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(3.8,-3.0,0.0);
+			glRotatef(120.0,0,0,1);
+			glScalef(0.75,1.0,1.0);
+			drawF();
 		glPopMatrix();
 	glPopMatrix();
 }
