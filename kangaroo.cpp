@@ -33,11 +33,8 @@ void drawLeg();
 void drawHead();
 void drawBody();
 void drawEar();
-<<<<<<< HEAD
 void drawArm();
-=======
 void drawSnout();
->>>>>>> a87ad28cf544885069076f203e4a7fd6b5331bd0
 
 
 //======================================================
