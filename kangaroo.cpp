@@ -9,7 +9,7 @@
 #include "./J.h"
 #include "./G.h"
 
-#define NUMBER_OF_MODELS 12
+#define NUMBER_OF_MODELS 13
 
 //======================================================
 // GLOBAL VARIABLES 
@@ -39,6 +39,8 @@ void drawBody();
 void drawEar();
 void drawArm();
 void drawSnout();
+void drawTail();
+
 
 
 //======================================================
@@ -211,7 +213,6 @@ void drawScene()
 	{
 		case 0:
 			drawKangaroo();
-			
 		break;
 		case 1: 
 			drawLeg();
@@ -232,21 +233,24 @@ void drawScene()
 			drawArm();
 		break;
 		case 7:
-			drawJ();
+			drawTail();
 		break;
 		case 8:
-			drawR();
+			drawJ();
 		break;
 		case 9:
-			drawL();
+			drawR();
 		break;
 		case 10:
-			drawF();
+			drawL();
 		break;
 		case 11:
-			drawG();
+			drawF();
 		break;
 		case 12:
+			drawG();
+		break;
+		case 13:
 			drawA();
 		break;
 		default:
@@ -304,6 +308,58 @@ void drawBody()
 		glTranslatef(4, 0, 0);
 		drawArm();
 	glPopMatrix();
+}
+
+void drawTail()
+{
+		glPushMatrix();
+			glTranslatef(1.0,0,0);
+			glRotatef(90.0,0,0,1);
+			glScalef(0.7,0.7,1.0);
+			drawA();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-1.5,-0.5,0);
+			glRotatef(100.0,0,0,1);
+			glScalef(0.6,0.6,1.0);
+			drawA();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-3.0,-2.5,0);
+			glRotatef(130.0,0,0,1);
+			glScalef(0.6,0.6,1.0);
+			drawA();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-4.0,-4.3,0);
+			glRotatef(145.0,0,0,1);
+			glScalef(0.5,0.5,1.0);
+			drawA();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-4.5,-5.6,0);
+			glRotatef(160.0,0,0,1);
+			glScalef(0.4,0.4,1.0);
+			drawA();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-4.8,-6.9,0);
+			glRotatef(170.0,0,0,1);
+			glScalef(0.35,0.35,1.0);
+			drawA();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-5.8,-8.2,0);
+			glRotatef(150.0,0,0,1);
+			glScalef(0.3,0.3,1.0);
+			drawA();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-7.2,-9.2,0);
+			glRotatef(130.0,0,0,1);
+			glScalef(0.3,0.3,1.0);
+			drawA();
+		glPopMatrix();
 }
 
 void drawHead()
