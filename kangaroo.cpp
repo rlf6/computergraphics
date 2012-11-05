@@ -26,7 +26,7 @@ bool rotating=false;
 bool animated= false;
 float foot_angle = 90;
 float leg_rot = 30;
-float body_rot = 45;
+float body_rot = 35;
 float arm_rot = 0;
 float tail_rot = 0;
 int change = 1;
@@ -102,23 +102,10 @@ void drawAxesAndGridLines(bool x_y_display, bool y_z_display,  bool x_z_display)
 // VIEW CONTROL ROUTINES
 //======================================================
 
-void idleCallBack(){
-	
-	if(animated)
-	{
-			body_rot += 3*change;
-			leg_rot -= 10*change;
-			foot_angle += 10*change;
-			tail_rot -= 5*change;
-			if(leg_rot == -30 || leg_rot == 30)
-				{ change = change * -1; }
-			glutPostRedisplay();
-	}
-	else if(rotating)
-	{
+void idleCallBack()
+{
 		yaw=yaw+.25;
 		glutPostRedisplay();
-	}
 }
 
 void rotateView(bool r){
@@ -183,8 +170,9 @@ void animate(int x)
 	{ change = change * -1; }
 	glutPostRedisplay();
 	if(animated)
-	{ glutTimerFunc(100, animate, x); 
-}
+	{ 
+		glutTimerFunc(100, animate, x); 
+	}
 }
 
 //======================================================
@@ -206,9 +194,10 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 			animated = false;
 			foot_angle = 90;
 			leg_rot = 30;
-			body_rot = 45;
+			body_rot = 35;
 			arm_rot = 0;
 			tail_rot = 0;
+			change = 1;
 		}
 		else if(!animated)
 		{	
@@ -586,7 +575,7 @@ int main(int argc, char** argv)
 	// Print Application Usage
 	printf("Program Controls:\n");
 	printf("Left Mouse Button & Drag - Changes the View.\n");
-	printf("Key \"1\" - Animate\n");
+	printf("Key \"a or A\" - Animate\n");
 	printf("Key \"b\" - Back Fill.\n");
 	printf("Key \"f\" - Front Fill.\n");
 	printf("Key \"l\" - Wire Frame/Line Fill.\n");
