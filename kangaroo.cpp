@@ -26,14 +26,14 @@ bool rotating=false;
 bool animated= false;
 bool arm_animated = false;
 float foot_angle = 90;
-float leg_rot = 30;
+float leg_rot = 0;
 float body_rot = 35;
 float arm_rot = 0;
 float tail_rot = 0;
 float left_arm = 0;
 float right_arm = 0;
 float arm_change = 1;
-
+int jump = 1;
 int change = 1;
 
 //
@@ -168,11 +168,12 @@ void reshapeCallBack(int w, int h)
 void animate(int x)
 {	
 	body_rot += 3*change;
-	leg_rot -= 10*change;
-	foot_angle += 10*change;
+	leg_rot -= 13*change;
+	foot_angle += 14*change;
 	tail_rot -= 5*change;
-	if(leg_rot == -30 || leg_rot == 30)
-	{ change = change * -1; }
+	jump += 1*change;
+	if(leg_rot < -30 || leg_rot > 20)
+		{ change = change * -1; }
 	glutPostRedisplay();
 	if(animated)
 	{ 
@@ -180,17 +181,14 @@ void animate(int x)
 	}
 }
 
-void arm_animate(int x)
+void arm_animate()
 {	
 	left_arm += 3*arm_change;
 	right_arm -= 3*arm_change;
 	if(left_arm == -30 || left_arm == 30 )
 	{ arm_change = arm_change * -1; }
 	glutPostRedisplay();
-	if(arm_animated)
-	{ 
-		glutTimerFunc(100, arm_animate, x); 
-	}	
+		
 }
 
 //======================================================
@@ -210,15 +208,18 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 		if(animated)
 		{
 			animated = false;
-			foot_angle = 90;
-			leg_rot = 30;
-			body_rot = 35;
+			foot_angle = 110;
+			leg_rot = 10;
+			body_rot = 0;
 			arm_rot = 0;
 			tail_rot = 0;
 			change = 1;
+			jump = 1;
 		}
 		else if(!animated)
 		{	
+			body_rot = 35;
+			foot_angle = 90;
 			animated = true;
 			animate(x);
 		}
@@ -233,7 +234,7 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 		else if(!arm_animated)
 		{
 			animated = true;
-			arm_animate(x);
+			arm_animate();
 		}
 	case 'b': case 'B':
 		glPolygonMode(GL_BACK,GL_FILL);
@@ -318,14 +319,17 @@ void drawScene()
 
 void drawKangaroo()
 {
-	glScalef(0.7,0.7,0.7);
-	glRotatef(body_rot, 1, 0, 0);
-	drawBody();
-	//attach head
+	glTranslatef(0, jump, 0);
 	glPushMatrix();
-		glTranslatef(0, 6.7, 0);
-		glScalef(0.7, 0.7, 0.7);
-		drawHead();
+		glScalef(0.7,0.7,0.7);
+		glRotatef(body_rot, 1, 0, 0);
+		drawBody();
+		//attach head
+		glPushMatrix();
+			glTranslatef(0, 6.7, 0);
+			glScalef(0.7, 0.7, 0.7);
+			drawHead();
+		glPopMatrix();
 	glPopMatrix();
 		
 }
