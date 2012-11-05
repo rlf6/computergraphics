@@ -263,7 +263,7 @@ void drawScene()
 
 void drawKangaroo()
 {
-	glScalef(0.8,0.8,0.8);
+	glScalef(0.7,0.7,0.7);
 	glRotatef(body_rot, 1, 0, 0);
 	drawBody();
 	//attach head
@@ -389,7 +389,10 @@ void drawHead()
 			}         
 		glPopMatrix();
 		//snout
-		
+		glPushMatrix();
+			glTranslatef(-2, -3, 0);
+			drawSnout();
+		glPopMatrix();
 		//attach ears
 		glPushMatrix();
 			glRotatef(-25, 1, 0, 0);
@@ -402,6 +405,18 @@ void drawHead()
 				drawEar();
 			glPopMatrix();
 		glPopMatrix();
+		//eyes
+		glPushMatrix();
+			glScalef(0.5, 0.35, 0.8);
+			glPushMatrix();
+				glTranslatef(-6, -2, 0.6);
+				drawA();
+			glPopMatrix();
+			glPushMatrix();	
+				glTranslatef(2, -2, 0.6);
+				drawA();
+			glPopMatrix();
+		glPopMatrix();
 		
 	glPopMatrix();
 }
@@ -410,7 +425,6 @@ void drawEar()
 {
 	glPushMatrix();
 		glScalef(0.5, 0.5, 0.5);
-	
 		glPushMatrix();
 			glTranslatef(-2, 5 , 0);
 			glScalef(1, 1.5, 1);
@@ -442,8 +456,20 @@ void drawArm()
 void drawSnout()
 {
 	glPushMatrix();
-		glRotatef(90, 1, 0, 0);
+		glTranslatef(2, -0.5, 5);
+		glRotatef(100, 1, 0, 0); glRotatef(-90, 0, 1, 0);
+		glScalef(0.4, 1, 1);
 		drawR();
+		glPushMatrix();
+			glRotatef(20, 1, 0, 0);
+			drawR();
+			glRotatef(-40, 1, 0, 0);
+			drawR();
+		glPopMatrix();
+		glPushMatrix();
+			glRotatef(30, 0, 0, 1);
+			drawR();
+		glPopMatrix();
 	glPopMatrix();
 }
 
