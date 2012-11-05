@@ -308,6 +308,14 @@ void drawBody()
 		glTranslatef(4, 0, 0);
 		drawArm();
 	glPopMatrix();
+	//attach tail
+	glPushMatrix();
+		glTranslatef(0,-8,-6);
+		glRotatef(270.0,0,1,0);
+		glRotatef(10.0,1,0,0);
+		glScalef(0.75,0.75,0.75);
+		drawTail();
+	glPopMatrix();
 }
 
 void drawTail()
