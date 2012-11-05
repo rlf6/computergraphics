@@ -265,6 +265,7 @@ void drawScene()
 
 void drawKangaroo()
 {
+	glScalef(0.8,0.8,0.8);
 	glRotatef(body_rot, 1, 0, 0);
 	drawBody();
 	//attach head
