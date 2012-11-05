@@ -28,6 +28,7 @@ float foot_angle = 90;
 float leg_rot = 30;
 float body_rot = 45;
 float arm_rot = 0;
+float tail_rot = 0;
 int change = 1;
 
 //
@@ -163,6 +164,7 @@ void animate(int x)
 	body_rot += 3*change;
 	leg_rot -= 10*change;
 	foot_angle += 10*change;
+	tail_rot -= 5*change;
 	if(leg_rot == -30 || leg_rot == 30)
 		{ change = change * -1; }
 	glutPostRedisplay();
@@ -311,7 +313,7 @@ void drawBody()
 	glPopMatrix();
 	//attach tail
 	glPushMatrix();
-		glTranslatef(0,-8,-6);
+		glTranslatef(0,-6,-6);
 		glRotatef(270.0,0,1,0);
 		glRotatef(10.0,1,0,0);
 		glScalef(0.75,0.75,0.75);
@@ -321,6 +323,8 @@ void drawBody()
 
 void drawTail()
 {
+	glPushMatrix();
+		glRotatef(tail_rot,0,0,1);
 		glPushMatrix();
 			glTranslatef(1.0,0,0);
 			glRotatef(90.0,0,0,1);
@@ -369,6 +373,7 @@ void drawTail()
 			glScalef(0.3,0.3,1.0);
 			drawA();
 		glPopMatrix();
+	glPopMatrix();
 }
 
 void drawHead()
