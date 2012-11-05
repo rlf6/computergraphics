@@ -24,11 +24,16 @@ int mouseX0, mouseY0;
 bool rotating=false;
 //articulation
 bool animated= false;
+bool arm_animated = false;
 float foot_angle = 90;
 float leg_rot = 30;
 float body_rot = 45;
 float arm_rot = 0;
 float tail_rot = 0;
+float left_arm = 0;
+float right_arm = 0;
+float arm_change = 1;
+
 int change = 1;
 
 //
@@ -187,6 +192,19 @@ void animate(int x)
 }
 }
 
+void arm_animate(int x)
+{	
+	left_arm += 3*arm_change;
+	right_arm -= 3*arm_change;
+	if(left_arm == -30 || left_arm == 30 )
+	{ arm_change = arm_change * -1; }
+	glutPostRedisplay();
+	if(arm_animated)
+	{ 
+		glutTimerFunc(100, arm_animate, x); 
+	}	
+}
+
 //======================================================
 // KEYBOARD CALLBACK ROUTINE 
 //======================================================
@@ -216,6 +234,18 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 			animate(x);
 		}
 	break;
+	case 's' : case 'S':
+		if(arm_animated)
+		{
+			arm_animated = false;
+			left_arm = 0;
+			right_arm = 0;
+		}
+		else if(!arm_animated)
+		{
+			animated = true;
+			arm_animate(x);
+		}
 	case 'b': case 'B':
 		glPolygonMode(GL_BACK,GL_FILL);
 	break;
@@ -340,9 +370,12 @@ void drawBody()
 	//attach arms
 	glPushMatrix();
 		glTranslatef(-2, -2, 0);
-		glRotatef(arm_rot, 1, 0, 0);
+		glRotatef(left_arm, 1, 0, 0);
 		drawArm();
-		glTranslatef(4, 0, 0);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(2, -2, 0);
+		glRotatef(right_arm,1,0,0);
 		drawArm();
 	glPopMatrix();
 	//attach tail
