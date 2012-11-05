@@ -23,7 +23,7 @@ bool MousePressed;
 int mouseX0, mouseY0;
 bool rotating=false;
 //articulation
-bool animated=false;
+bool animated= false;
 float foot_angle = 90;
 float leg_rot = 30;
 float body_rot = 45;
@@ -102,9 +102,23 @@ void drawAxesAndGridLines(bool x_y_display, bool y_z_display,  bool x_z_display)
 // VIEW CONTROL ROUTINES
 //======================================================
 
-void idleCallBack (){
-	yaw=yaw+.25;
-    glutPostRedisplay();
+void idleCallBack(){
+	
+	if(animated)
+	{
+			body_rot += 3*change;
+			leg_rot -= 10*change;
+			foot_angle += 10*change;
+			tail_rot -= 5*change;
+			if(leg_rot == -30 || leg_rot == 30)
+				{ change = change * -1; }
+			glutPostRedisplay();
+	}
+	else if(rotating)
+	{
+		yaw=yaw+.25;
+		glutPostRedisplay();
+	}
 }
 
 void rotateView(bool r){
@@ -166,10 +180,13 @@ void animate(int x)
 	foot_angle += 10*change;
 	tail_rot -= 5*change;
 	if(leg_rot == -30 || leg_rot == 30)
-		{ change = change * -1; }
+	{ change = change * -1; }
 	glutPostRedisplay();
-	glutTimerFunc(100, animate, x);
+	if(animated)
+	{ glutTimerFunc(100, animate, x); 
 }
+}
+
 //======================================================
 // KEYBOARD CALLBACK ROUTINE 
 //======================================================
@@ -181,6 +198,23 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 	case 'm': case 'M':
 		current_model++;
 		if (current_model > NUMBER_OF_MODELS) current_model = 0;
+	break;
+	case 'a': case 'A':
+	//turn on/off animation
+		if(animated)
+		{
+			animated = false;
+			foot_angle = 90;
+			leg_rot = 30;
+			body_rot = 45;
+			arm_rot = 0;
+			tail_rot = 0;
+		}
+		else if(!animated)
+		{	
+			animated = true;
+			animate(x);
+		}
 	break;
 	case 'b': case 'B':
 		glPolygonMode(GL_BACK,GL_FILL);
@@ -542,8 +576,7 @@ int main(int argc, char** argv)
     glutMotionFunc(mouseMotionCallBack);
 	glutKeyboardFunc(keyboardCallBack);
 	
-	int x; 
-	animate(x);
+	
 	
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 	glColor3f(1.0, 0.0, 0.0);
