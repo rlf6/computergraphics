@@ -24,18 +24,19 @@ int mouseX0, mouseY0;
 bool rotating=false;
 //articulation
 bool animated= false;
-bool arm_animated = false;
+bool dancing = false;
 float foot_angle = 90;
 float leg_rot = 0;
 float body_rot = 0;
 float arm_rot = 0;
 float tail_rot = 0;
+float head_rot = 0;
 float left_arm = 0;
 float right_arm = 0;
-float arm_change = 1;
+
 int jump = 1;
 int change = 1;
-
+int arm_change = 1;
 //
 //Prototypes
 void drawKangaroo();
@@ -165,30 +166,35 @@ void reshapeCallBack(int w, int h)
     glMatrixMode(GL_MODELVIEW);
 }
 
-void animate(int x)
+void jumping(int x)
 {	
 	body_rot += 3*change;
 	leg_rot -= 13*change;
 	foot_angle += 14*change;
-	tail_rot -= 5*change;
+	tail_rot -= 6*change;
 	jump += 1*change*-1;
 	if(leg_rot < -30 || leg_rot > 20)
 		{ change = change * -1; }
 	glutPostRedisplay();
 	if(animated)
 	{ 
-		glutTimerFunc(100, animate, x); 
+		glutTimerFunc(100, jumping, x); 
 	}
 }
 
-void arm_animate()
+void dance(int x)
 {	
 	left_arm += 3*arm_change;
 	right_arm -= 3*arm_change;
+	head_rot += 3*arm_change;
+	tail_rot += 5*arm_change;
 	if(left_arm == -30 || left_arm == 30 )
 	{ arm_change = arm_change * -1; }
 	glutPostRedisplay();
-		
+	if(dancing)
+	{
+		glutTimerFunc(40, dance, x);
+	}
 }
 
 //======================================================
@@ -221,20 +227,22 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 			body_rot = 35;
 			foot_angle = 90;
 			animated = true;
-			animate(x);
+			jumping(1);
 		}
 	break;
 	case 's' : case 'S':
-		if(arm_animated)
+		if(dancing)
 		{
-			arm_animated = false;
+			dancing = false;
 			left_arm = 0;
 			right_arm = 0;
+			head_rot = 0;
+			tail_rot = 0;
 		}
-		else if(!arm_animated)
+		else if(!dancing)
 		{
-			animated = true;
-			arm_animate();
+			dancing = true;
+			dance(1);
 		}
 	case 'b': case 'B':
 		glPolygonMode(GL_BACK,GL_FILL);
@@ -265,6 +273,7 @@ void drawScene()
 	
 	glPushMatrix();
 	
+	//model viewer
 	switch(current_model)
 	{
 		case 0:
@@ -326,7 +335,8 @@ void drawKangaroo()
 		drawBody();
 		//attach head
 		glPushMatrix();
-			glTranslatef(0, 6.7, 0);
+			glTranslatef(0, 3, 0);
+			glRotatef(head_rot, 1, 0, 0);
 			glScalef(0.7, 0.7, 0.7);
 			drawHead();
 		glPopMatrix();
@@ -373,9 +383,10 @@ void drawBody()
 	glPopMatrix();
 	//attach tail
 	glPushMatrix();
-		glTranslatef(0,-6,-6);
+		glTranslatef(0,-7,-2);
 		glRotatef(270.0,0,1,0);
 		glRotatef(10.0,1,0,0);
+		glRotatef(tail_rot,0,0,1);
 		glScalef(0.75,0.75,0.75);
 		drawTail();
 	glPopMatrix();
@@ -383,8 +394,8 @@ void drawBody()
 
 void drawTail()
 {
+	glTranslatef(-5, 0, 0);
 	glPushMatrix();
-		glRotatef(tail_rot,0,0,1);
 		glPushMatrix();
 			glTranslatef(1.0,0,0);
 			glRotatef(90.0,0,0,1);
@@ -439,6 +450,7 @@ void drawTail()
 void drawHead()
 {
 	//main part
+	glTranslatef(0, 5, 0);
 	glPushMatrix();
 		glTranslatef(0, 3, 0);
 		glScalef(0.8, 1.5, 1);
@@ -610,9 +622,10 @@ int main(int argc, char** argv)
 	glEnable(GL_DEPTH_TEST); /* Enable hidden--surface--removal */
 
 	// Print Application Usage
-	printf("Program Controls:\n");
+	printf("Program Controls:\n\n");
+	printf("Key \"a or A\" - Watch the kangaroo jump!\n");
+	printf("Key \"s or S\" - See the kangaroo dance!\n\n");
 	printf("Left Mouse Button & Drag - Changes the View.\n");
-	printf("Key \"a or A\" - Animate\n");
 	printf("Key \"b\" - Back Fill.\n");
 	printf("Key \"f\" - Front Fill.\n");
 	printf("Key \"l\" - Wire Frame/Line Fill.\n");
