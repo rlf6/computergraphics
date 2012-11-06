@@ -27,7 +27,7 @@ bool animated= false;
 bool arm_animated = false;
 float foot_angle = 90;
 float leg_rot = 0;
-float body_rot = 35;
+float body_rot = 0;
 float arm_rot = 0;
 float tail_rot = 0;
 float left_arm = 0;
@@ -171,7 +171,7 @@ void animate(int x)
 	leg_rot -= 13*change;
 	foot_angle += 14*change;
 	tail_rot -= 5*change;
-	jump += 1*change;
+	jump += 1*change*-1;
 	if(leg_rot < -30 || leg_rot > 20)
 		{ change = change * -1; }
 	glutPostRedisplay();
