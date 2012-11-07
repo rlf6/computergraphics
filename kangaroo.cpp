@@ -22,6 +22,7 @@ float pitch0, yaw0;
 bool MousePressed;
 int mouseX0, mouseY0;
 bool rotating=false;
+
 //articulation
 bool animated= false;
 bool dancing = false;
@@ -179,21 +180,24 @@ void jumping(int x)
 	glutPostRedisplay();
 	if(animated)
 	{ 
+		//call method again if animated boolean set true
 		glutTimerFunc(100, jumping, x); 
 	}
 }
 
 void dance(int x)
 {	
+	//left & right arms move opp directions
 	left_arm += 3*arm_change;
 	right_arm -= 3*arm_change;
-	head_rot += 3*arm_change;
-	tail_rot += 5*arm_change;
+	head_rot += 3*arm_change; //bob head
+	tail_rot += 5*arm_change; //move tail
 	if(left_arm == -30 || left_arm == 30 )
 		{ arm_change = arm_change * -1; }
 	glutPostRedisplay();
 	if(dancing)
 	{
+		//call method again if dancing boolean set true
 		glutTimerFunc(40, dance, x);
 	}
 }
@@ -211,9 +215,10 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 		if (current_model > NUMBER_OF_MODELS) current_model = 0;
 	break;
 	case 'a': case 'A':
-	//turn on/off animation
-		if(animated)
+	//turn on/off jumping
+		if(animated) //turn off animation
 		{
+			//reset variables
 			animated = false;
 			foot_angle = 110;
 			leg_rot = 10;
@@ -225,6 +230,7 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 		}
 		else if(!animated)
 		{	
+			//turn on animation
 			body_rot = 35;
 			foot_angle = 90;
 			animated = true;
@@ -232,8 +238,10 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 		}
 	break;
 	case 's' : case 'S':
-		if(dancing)
+	//turn on/off dancing
+		if(dancing) //turn off animation
 		{
+			//reset variables
 			dancing = false;
 			left_arm = 0;
 			right_arm = 0;
@@ -242,6 +250,7 @@ void keyboardCallBack(unsigned char key, int x, int y) {
 		}
 		else if(!dancing)
 		{
+			//turn on animation
 			dancing = true;
 			dance(1);
 		}
@@ -329,7 +338,7 @@ void drawScene()
 
 void drawKangaroo(int jump, float body_rot, float head_rot, float leg_rot, float foot_angle, float arm_rot, float tail_rot, float left_arm, float right_arm)
 {
-	glTranslatef(0, jump, 0);
+	glTranslatef(0, jump, 0); //move kangaroo up in y-axis
 	glPushMatrix();
 		glScalef(0.7,0.7,0.7);
 		glRotatef(body_rot, 1, 0, 0);
@@ -362,6 +371,7 @@ void drawBody(float left_arm, float right_arm, float tail_rot, float leg_rot, fl
 			}           
 		glPopMatrix();
 	glPopMatrix();
+	
 	//attach legs
 	glPushMatrix();
 		glTranslatef(-2, -4.5, 0.5);
@@ -371,6 +381,7 @@ void drawBody(float left_arm, float right_arm, float tail_rot, float leg_rot, fl
 		glTranslatef(2, -4.5, 0.5);
 		drawLeg(leg_rot, foot_angle);
 	glPopMatrix();
+	
 	//attach arms
 	glPushMatrix();
 		glTranslatef(-2, -2, 0);
@@ -379,15 +390,16 @@ void drawBody(float left_arm, float right_arm, float tail_rot, float leg_rot, fl
 	glPopMatrix();
 	glPushMatrix();
 		glTranslatef(2, -2, 0);
-		glRotatef(right_arm,1,0,0);
+		glRotatef(right_arm, 1, 0, 0);
 		drawArm();
 	glPopMatrix();
+	
 	//attach tail
 	glPushMatrix();
 		glTranslatef(0,-7,-2);
 		glRotatef(270.0,0,1,0);
-		glRotatef(10.0,1,0,0);
-		glRotatef(tail_rot,0,0,1);
+		glRotatef(10.0,1,0,0); 
+		glRotatef(tail_rot,0,0,1); //z-axis rotation affected by animation
 		glScalef(0.75,0.75,0.75);
 		drawTail();
 	glPopMatrix();
@@ -466,11 +478,13 @@ void drawHead()
 				glPopMatrix();
 			}         
 		glPopMatrix();
-		//snout
+		
+		//attach snout
 		glPushMatrix();
 			glTranslatef(-2, -3, 0);
 			drawSnout();
 		glPopMatrix();
+		
 		//attach ears
 		glPushMatrix();
 			glRotatef(-25, 1, 0, 0);
@@ -483,6 +497,7 @@ void drawHead()
 				drawEar();
 			glPopMatrix();
 		glPopMatrix();
+		
 		//eyes
 		glPushMatrix();
 			glScalef(0.5, 0.35, 0.8);
@@ -514,20 +529,20 @@ void drawEar()
 void drawArm()
 {
 	glPushMatrix();
-	glRotatef(-90, 0, 1, 0);
-	glPushMatrix();
+		glRotatef(-90, 0, 1, 0);
 		glPushMatrix();
-			glScalef(1.5,1.0,1.0);
-			glRotatef(90.0,0,0,1);
-			drawJ();
+			glPushMatrix();
+				glScalef(1.5,1.0,1.0);
+				glRotatef(90.0,0,0,1);
+				drawJ();
+			glPopMatrix();
+			glPushMatrix();
+				glTranslatef(3.8,-3.0,0.0);
+				glRotatef(120.0,0,0,1);
+				glScalef(0.75,1.0,1.0);
+				drawF();
+			glPopMatrix();
 		glPopMatrix();
-		glPushMatrix();
-			glTranslatef(3.8,-3.0,0.0);
-			glRotatef(120.0,0,0,1);
-			glScalef(0.75,1.0,1.0);
-			drawF();
-		glPopMatrix();
-	glPopMatrix();
 	glPopMatrix();
 }
 
