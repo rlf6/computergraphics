@@ -39,10 +39,10 @@ int change = 1;
 int arm_change = 1;
 //
 //Prototypes
-void drawKangaroo();
-void drawLeg();
+void drawKangaroo(int jump, float body_rot, float head_rot, float leg_rot, float foot_angle, float arm_rot, float tail_rot, float left_arm, float right_arm);
+void drawLeg(float leg_rot, float foot_angle);
 void drawHead();
-void drawBody();
+void drawBody(float left_arm, float right_arm, float tail_rot, float leg_rot, float foot_angle);
 void drawEar();
 void drawArm();
 void drawSnout();
@@ -166,6 +166,7 @@ void reshapeCallBack(int w, int h)
     glMatrixMode(GL_MODELVIEW);
 }
 
+
 void jumping(int x)
 {	
 	body_rot += 3*change;
@@ -189,7 +190,7 @@ void dance(int x)
 	head_rot += 3*arm_change;
 	tail_rot += 5*arm_change;
 	if(left_arm == -30 || left_arm == 30 )
-	{ arm_change = arm_change * -1; }
+		{ arm_change = arm_change * -1; }
 	glutPostRedisplay();
 	if(dancing)
 	{
@@ -277,16 +278,16 @@ void drawScene()
 	switch(current_model)
 	{
 		case 0:
-			drawKangaroo();
+			drawKangaroo(jump, body_rot, head_rot, leg_rot, foot_angle, arm_rot, tail_rot, left_arm, right_arm);
 		break;
 		case 1: 
-			drawLeg();
+			drawLeg(leg_rot, foot_angle);
 		break;
 		case 2:
 			drawHead();
 		break;
 		case 3:
-			drawBody();
+			drawBody(left_arm, right_arm, tail_rot, leg_rot, foot_angle);
 		break;
 		case 4:
 			drawEar();
@@ -326,13 +327,13 @@ void drawScene()
 	glPopMatrix();
 }
 
-void drawKangaroo()
+void drawKangaroo(int jump, float body_rot, float head_rot, float leg_rot, float foot_angle, float arm_rot, float tail_rot, float left_arm, float right_arm)
 {
 	glTranslatef(0, jump, 0);
 	glPushMatrix();
 		glScalef(0.7,0.7,0.7);
 		glRotatef(body_rot, 1, 0, 0);
-		drawBody();
+		drawBody(left_arm, right_arm, tail_rot, leg_rot, foot_angle);
 		//attach head
 		glPushMatrix();
 			glTranslatef(0, 3, 0);
@@ -344,7 +345,7 @@ void drawKangaroo()
 		
 }
 //draw body
-void drawBody()
+void drawBody(float left_arm, float right_arm, float tail_rot, float leg_rot, float foot_angle)
 {
 	//main part
 	glPushMatrix();
@@ -364,11 +365,11 @@ void drawBody()
 	//attach legs
 	glPushMatrix();
 		glTranslatef(-2, -4.5, 0.5);
-		drawLeg();
+		drawLeg(leg_rot, foot_angle);
 	glPopMatrix();
 	glPushMatrix();
 		glTranslatef(2, -4.5, 0.5);
-		drawLeg();
+		drawLeg(leg_rot, foot_angle);
 	glPopMatrix();
 	//attach arms
 	glPushMatrix();
@@ -550,7 +551,7 @@ void drawSnout()
 	glPopMatrix();
 }
 
-void drawLeg()
+void drawLeg(float leg_rot, float foot_angle)
 {
 	//upper leg
 	glRotatef(leg_rot, 1, 0, 0);
