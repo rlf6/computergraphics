@@ -167,7 +167,9 @@ void reshapeCallBack(int w, int h)
     glMatrixMode(GL_MODELVIEW);
 }
 
-
+\\===================================================
+\\ Animation timer func methods
+\\===================================================
 void jumping(int x)
 {	
 	body_rot += 3*change;
@@ -336,6 +338,9 @@ void drawScene()
 	glPopMatrix();
 }
 
+\\=============================================================
+\\Begining of Scene graph code
+\\==============================================================
 void drawKangaroo(int jump, float body_rot, float head_rot, float leg_rot, float foot_angle, float arm_rot, float tail_rot, float left_arm, float right_arm)
 {
 	glTranslatef(0, jump, 0); //move kangaroo up in y-axis
